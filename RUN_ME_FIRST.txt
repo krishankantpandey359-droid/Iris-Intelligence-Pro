@@ -1,0 +1,22 @@
+OIBSIP TASK 1: IRIS FLOWER CLASSIFICATION
+
+You do not need to add any dataset or code file.
+
+1. Extract this ZIP.
+2. Open the extracted folder.
+3. Open Command Prompt or Terminal in this folder.
+4. Run these commands one by one:
+
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python src/train.py
+pytest -q
+streamlit run app.py
+
+If Windows blocks activation, run:
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+Then activate the environment again.
+
+The app opens in your browser. Keep the terminal window open while using it.
+Internet is required for the first-time installation of Python packages.
