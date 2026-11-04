@@ -1,45 +1,67 @@
 # 🌸 Iris Intelligence Pro
 
-### Machine Learning Classification & Interactive Analytics Dashboard
+### Premium Machine Learning Classification & Interactive Analytics Dashboard
 
-An end-to-end Machine Learning project that classifies Iris flower species using five classification algorithms and presents model insights through an interactive Streamlit dashboard.
+An end-to-end Machine Learning project built with Python and Scikit-learn to classify Iris flower species. The project combines data analysis, model training, evaluation, and an interactive Streamlit dashboard with a modern analytics interface.
+
+---
+
+## 📸 Dashboard Showcase
+
+![Iris Intelligence Pro Dashboard](screenshots/iris-intelligence-pro-showcase.png)
+
+**Dashboard Modules**
+- Executive Overview
+- Data Explorer
+- Predict Studio
+- Batch Prediction
+- Model Intelligence
+- About Project
+
+---
 
 ## 📌 Project Overview
 
-Iris Intelligence Pro is a multiclass classification project built using Python and Scikit-learn.
+Iris Intelligence Pro is a multiclass classification project that predicts Iris flower species using four numerical measurements.
 
-The project uses four flower measurements to predict one of three Iris species:
+The project uses the classic Iris dataset, containing 150 observations, four input features, and three target classes:
 
 - Setosa
 - Versicolor
 - Virginica
 
-It combines data preprocessing, exploratory data analysis, model comparison, hyperparameter tuning, model evaluation, and interactive predictions.
+It follows an end-to-end Machine Learning workflow, including data validation, Exploratory Data Analysis (EDA), model comparison, hyperparameter tuning, cross-validation, model evaluation, and interactive predictions.
 
 ## ✨ Key Features
 
-- Data loading and validation
+- Dataset loading and validation
 - Exploratory Data Analysis (EDA)
+- Feature distribution and correlation analysis
 - Five Machine Learning classification algorithms
 - Hyperparameter tuning using GridSearchCV
 - Stratified 5-fold cross-validation
-- Model evaluation on a separate test dataset
+- Model selection using cross-validation accuracy
+- Held-out test evaluation
 - Confusion matrix and classification report
 - ROC curve analysis
 - Permutation feature importance
 - Interactive Streamlit dashboard
-- Single and batch predictions
-- Automated project tests
+- Single flower prediction
+- CSV-based batch prediction
+- Prediction confidence display
+- Automated data validation tests
 
 ## 🧠 Machine Learning Models
 
-The following algorithms are evaluated:
+Five classification algorithms are evaluated:
 
-1. Logistic Regression
-2. K-Nearest Neighbors (KNN)
-3. Support Vector Machine (SVM)
-4. Random Forest
-5. Gradient Boosting
+| Algorithm | Description |
+|---|---|
+| Logistic Regression | Linear classification |
+| K-Nearest Neighbors (KNN) | Distance-based classification |
+| Support Vector Machine (SVM) | Margin-based classification |
+| Random Forest | Ensemble learning |
+| Gradient Boosting | Boosting-based classification |
 
 The best model is selected using cross-validation accuracy on the training dataset.
 
@@ -55,26 +77,57 @@ Results from the recorded training run:
 | Macro Recall | 93.33% |
 | Macro F1-Score | 93.33% |
 
-Selected Model: Support Vector Machine (SVM)
+**Selected Model:** Support Vector Machine (SVM)
 
-Note: Results are based on a single train-test split with random state 42. The Iris dataset contains 150 observations, so performance should be interpreted in the context of this small benchmark dataset.
+These results are based on a stratified 80:20 train-test split with random state 42 and stratified 5-fold cross-validation.
 
-## 📈 Interactive Dashboard
+The test set contains 30 observations. One incorrect prediction changes test accuracy by approximately 3.33 percentage points.
 
-The Streamlit dashboard includes six sections:
+## 📈 Dashboard Modules
 
-1. Executive Overview
-2. Data Explorer
-3. Predict Studio
-4. Batch Prediction
-5. Model Intelligence
-6. About Project
+### 1. Executive Overview
+- Total dataset records
+- Number of features and species
+- Missing value status
+- Species distribution
+- Dataset statistical summary
 
-### Dashboard Screenshots
+### 2. Data Explorer
+- Feature distribution analysis
+- Histogram, box plot, and violin plot
+- Feature relationship analysis
+- Correlation heatmap
 
-Add your dashboard screenshots to a `screenshots` folder and display them here.
+### 3. Predict Studio
+- Interactive flower measurement inputs
+- Single flower species prediction
+- Prediction confidence
+- Class probability visualization
+- Prediction history
 
-<!-- Add screenshots here after capturing them -->
+### 4. Batch Prediction
+- CSV file upload
+- Required feature validation
+- Multiple flower predictions
+- Prediction distribution
+- Downloadable prediction results
+
+### 5. Model Intelligence
+- Model comparison table
+- Cross-validation accuracy chart
+- Confusion matrix
+- ROC curve analysis
+- Feature importance
+- Classification report
+- Training metadata
+
+### 6. About Project
+- Project objective
+- Dataset information
+- Machine Learning algorithms
+- Methodology
+- Technology stack
+- Model performance
 
 ## 🗂️ Project Structure
 
@@ -82,6 +135,7 @@ Add your dashboard screenshots to a `screenshots` folder and display them here.
 Iris-Intelligence-Pro/
 │
 ├── app.py
+├── app_backup.py
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
@@ -106,6 +160,9 @@ Iris-Intelligence-Pro/
 │
 ├── reports/
 │   └── Project_Report.md
+│
+├── screenshots/
+│   └── iris-intelligence-pro-showcase.png
 │
 ├── src/
 │   ├── data_utils.py
@@ -164,38 +221,39 @@ Open the local URL displayed in your terminal.
 
 The project uses the classic Iris flower dataset.
 
-- Total observations: 150
-- Input features: 4
-- Target classes: 3
+| Dataset Property | Value |
+|---|---:|
+| Total Observations | 150 |
+| Input Features | 4 |
+| Target Classes | 3 |
+| Missing Values | 0 |
 
-Input features:
-
+**Input Features**
 - Sepal Length
 - Sepal Width
 - Petal Length
 - Petal Width
 
-Measurements are recorded in centimetres.
+All measurements are recorded in centimetres.
 
 ## 🛠️ Technology Stack
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- Scikit-learn
-- Streamlit
-- Plotly
-- Joblib
-- Jupyter Notebook
-- Pytest
+| Category | Technologies |
+|---|---|
+| Programming Language | Python |
+| Data Processing | Pandas, NumPy |
+| Machine Learning | Scikit-learn |
+| Data Visualization | Matplotlib, Seaborn, Plotly |
+| Dashboard | Streamlit |
+| Model Storage | Joblib |
+| Development | Jupyter Notebook |
+| Testing | Pytest |
 
 ## 🔍 Methodology
 
-1. Load and validate the dataset.
-2. Perform exploratory data analysis.
-3. Split the dataset into training and testing sets using stratified sampling.
+1. Load and validate the Iris dataset.
+2. Perform Exploratory Data Analysis.
+3. Split the dataset into stratified training and test sets.
 4. Tune five classification models using GridSearchCV.
 5. Apply stratified 5-fold cross-validation.
 6. Select the best model using cross-validation accuracy.
@@ -203,14 +261,16 @@ Measurements are recorded in centimetres.
 8. Save the trained model and evaluation outputs.
 9. Use the trained model for interactive predictions.
 
-Feature scaling is performed inside pipelines to prevent data leakage during cross-validation.
+Feature scaling is performed inside pipelines for scale-sensitive models. This prevents preprocessing leakage across cross-validation folds.
 
 ## 🎯 Learning Outcomes
 
-Through this project, I worked on:
+This project provided practical experience in:
 
-- End-to-end Machine Learning workflow
-- Classification algorithms
+- End-to-end Machine Learning workflows
+- Multiclass classification
+- Data preprocessing and validation
+- Exploratory Data Analysis
 - Model comparison and hyperparameter tuning
 - Cross-validation and model evaluation
 - Data visualization
@@ -220,11 +280,13 @@ Through this project, I worked on:
 
 ## ⚠️ Limitations
 
-The Iris dataset is a small benchmark dataset. Its results do not guarantee similar performance on new datasets or real-world measurement systems.
+- The Iris dataset is a small benchmark dataset.
+- The test set contains only 30 observations.
+- High benchmark performance does not guarantee similar performance on new datasets.
+- Prediction confidence is not the same as guaranteed prediction accuracy.
+- Model performance depends on the dataset and evaluation setup.
 
-The test set contains only 30 observations. A single incorrect prediction changes test accuracy by approximately 3.33 percentage points.
-
-## 👨‍💻 Author
+## 👩‍💻 Author
 
 **Srishti Pandey**
 
@@ -232,6 +294,9 @@ MCA Data Science Student
 
 GitHub: [krishankantpandey359-droid](https://github.com/krishankantpandey359-droid)
 
+**Project Repository:**  
+[Iris Intelligence Pro](https://github.com/krishankantpandey359-droid/Iris-Intelligence-Pro)
+
 ---
 
-⭐ If you find this project useful, feel free to explore the repository.
+⭐ Thank you for exploring Iris Intelligence Pro!
