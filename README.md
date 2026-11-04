@@ -21,6 +21,9 @@ An end-to-end Machine Learning project built with Python and Scikit-learn to cla
 ---
 
 ## 📌 Project Overview
+## Live Demo
+
+Explore the live dashboard: https://iris-intelligence-pro-wzjzut29zd2mkrfo4cecmm.streamlit.app/
 
 Iris Intelligence Pro is a multiclass classification project that predicts Iris flower species using four numerical measurements.
 
