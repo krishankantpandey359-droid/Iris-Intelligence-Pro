@@ -8,7 +8,7 @@ An end-to-end Machine Learning project built with Python and Scikit-learn to cla
 
 ## 📸 Dashboard Showcase
 
-![Iris Intelligence Pro Dashboard](screenshots/iris-intelligence-pro-showcase.png)
+![Iris Intelligence Pro Dashboard](Iris%20Intelligence%20Pro%20Dashboard.png)
 
 **Dashboard Modules**
 - Executive Overview
