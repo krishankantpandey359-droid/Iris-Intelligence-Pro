@@ -697,18 +697,11 @@ elif page == "Batch Prediction":
 
     st.subheader("Batch Prediction Centre")
     st.caption("Upload a CSV containing the four required measurement columns.")
+    st.info("Required columns: " + ", ".join(FEATURES))
 
-    st.info(
-        "Required columns: " + ", ".join(FEATURES)
-    )
-
-    uploaded_file = st.file_uploader(
-        "Upload your CSV file",
-        type=["csv"]
-    )
+    uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
     if uploaded_file is not None:
-
         current_signature = upload_signature(uploaded_file)
         if st.session_state.get("batch_upload_signature") != current_signature:
             st.session_state.pop("batch_results", None)
@@ -716,85 +709,47 @@ elif page == "Batch Prediction":
 
         try:
             batch_input = validate_batch_csv(uploaded_file.getvalue())
-            batch_df = pd.read_csv(uploaded_file)
+            st.markdown("### Uploaded Data Preview")
+            st.dataframe(batch_input.head(10), width="stretch", hide_index=True)
 
-            if True:
+            if st.button("Run Batch Predictions", type="primary"):
+                model = get_model()
+                predictions = model.predict(batch_input)
+                output_df = batch_input.copy()
+                output_df["Predicted Species"] = predictions
 
-                    st.markdown("### Uploaded Data Preview")
-                    st.dataframe(
-                        batch_input.head(10),
-                        width="stretch",
-                        hide_index=True
-                    )
+                if hasattr(model, "predict_proba"):
+                    probabilities = model.predict_proba(batch_input)
+                    output_df["Confidence"] = (probabilities.max(axis=1) * 100).round(2)
 
-                    if st.button(
-                        "Run Batch Predictions",
-                        type="primary"
-                    ):
+                st.session_state.batch_results = output_df
+                st.success(f"Successfully processed {len(output_df)} records.")
 
-                        model = get_model()
-
-                        predictions = model.predict(batch_input)
-
-                        output_df = batch_input.copy()
-                        output_df["Predicted Species"] = predictions
-
-                        if hasattr(model, "predict_proba"):
-
-                            probabilities = model.predict_proba(
-                                batch_input
-                            )
-
-                            output_df["Confidence"] = (
-                                probabilities.max(axis=1) * 100
-                            ).round(2)
-
-                        st.session_state.batch_results = output_df
-
-                        st.success(
-                            f"Successfully processed {len(output_df)} records."
-                        )
-
-                if "batch_results" in st.session_state:
-
-                    st.markdown("### Batch Prediction Results")
-
-                    output_df = st.session_state.batch_results
-
-                    st.dataframe(
-                        output_df,
-                        width="stretch",
-                        hide_index=True
-                    )
-
-                    distribution = (
-                        output_df["Predicted Species"]
-                        .value_counts()
-                        .rename_axis("Species")
-                        .reset_index(name="Predictions")
-                    )
-
-                    fig = px.bar(
-                        distribution,
-                        x="Species",
-                        y="Predictions",
-                        color="Species"
-                    )
-
-                    st.plotly_chart(
-                        style_chart(fig),
-                        width="stretch"
-                    )
-
-                    st.download_button(
-                        "Download Batch Results",
-                        output_df.to_csv(index=False).encode("utf-8"),
-                        "iris_batch_predictions.csv",
-                        "text/csv"
-                    )
-
+        except ValueError as error:
+            st.error(str(error))
         except Exception as error:
             st.error(f"Unable to process file: {error}")
+
+    if "batch_results" in st.session_state:
+        st.markdown("### Batch Prediction Results")
+        output_df = st.session_state.batch_results
+        st.dataframe(output_df, width="stretch", hide_index=True)
+
+        distribution = (
+            output_df["Predicted Species"]
+            .value_counts()
+            .rename_axis("Species")
+            .reset_index(name="Predictions")
+        )
+        fig = px.bar(distribution, x="Species", y="Predictions", color="Species")
+        st.plotly_chart(style_chart(fig), width="stretch")
+
+        st.download_button(
+            "Download Batch Results",
+            output_df.to_csv(index=False).encode("utf-8"),
+            "iris_batch_predictions.csv",
+            "text/csv"
+        )
 
 
 # ==========================================================
