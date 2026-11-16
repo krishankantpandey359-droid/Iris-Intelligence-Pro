@@ -30,7 +30,7 @@ def test_batch_csv_rejects_missing_columns():
 
 
 def test_batch_csv_rejects_non_numeric_values():
-    frame = valid_frame()
+    frame = valid_frame().astype(object)
     frame.loc[0, "petal_width"] = "bad"
     with pytest.raises(ValueError, match="missing or non-numeric"):
         validate_batch_csv(csv_bytes(frame))
