@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
 
 from data_utils import load_data, FEATURES, TARGET
+from batch_utils import upload_signature, validate_batch_csv
 from train import train_and_evaluate
 
 
@@ -708,43 +709,16 @@ elif page == "Batch Prediction":
 
     if uploaded_file is not None:
 
-        try:
+        current_signature = upload_signature(uploaded_file)
+        if st.session_state.get("batch_upload_signature") != current_signature:
+            st.session_state.pop("batch_results", None)
+            st.session_state["batch_upload_signature"] = current_signature
 
+        try:
+            batch_input = validate_batch_csv(uploaded_file.getvalue())
             batch_df = pd.read_csv(uploaded_file)
 
-            missing_columns = [
-                column for column in FEATURES
-                if column not in batch_df.columns
-            ]
-
-            if missing_columns:
-                st.error(
-                    "Missing required columns: "
-                    + ", ".join(missing_columns)
-                )
-
-            elif batch_df.empty:
-                st.error("The uploaded CSV is empty.")
-
-            else:
-
-                batch_input = batch_df[FEATURES].apply(
-                    pd.to_numeric,
-                    errors="coerce"
-                )
-
-                if batch_input.isnull().any().any():
-                    st.error(
-                        "Some feature values are missing or non-numeric."
-                    )
-
-                elif not np.isfinite(batch_input.to_numpy()).all():
-                    st.error("The file contains infinite or invalid values.")
-
-                elif (batch_input <= 0).any().any():
-                    st.error("All flower measurements must be positive.")
-
-                else:
+            if True:
 
                     st.markdown("### Uploaded Data Preview")
                     st.dataframe(
