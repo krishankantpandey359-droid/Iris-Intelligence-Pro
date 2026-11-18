@@ -136,22 +136,18 @@ The test set contains 30 observations. One incorrect prediction changes test acc
 
 ```text
 Iris-Intelligence-Pro/
-│
+├── Iris Intelligence Pro Dashboard.png
 ├── app.py
-├── app_backup.py
 ├── README.md
 ├── requirements.txt
-├── .gitignore
-│
+├── RUN_ME_FIRST.txt
 ├── data/
-│   └── iris.csv
-│
+│   ├── iris.csv
+│   └── iris csv.csv
 ├── models/
 │   └── best_iris_classifier.joblib
-│
 ├── notebooks/
 │   └── Task1_Iris_Flower_Classification.ipynb
-│
 ├── outputs/
 │   ├── classification_report.txt
 │   ├── confusion_matrix.csv
@@ -160,20 +156,18 @@ Iris-Intelligence-Pro/
 │   ├── roc_curve_data.csv
 │   ├── run_metadata.json
 │   └── test_predictions.csv
-│
 ├── reports/
 │   └── Project_Report.md
-│
-├── screenshots/
-│   └── iris-intelligence-pro-showcase.png
-│
 ├── src/
+│   ├── batch_utils.py
 │   ├── data_utils.py
 │   └── train.py
-│
 └── tests/
+    ├── test_batch_utils.py
     └── test_project.py
 ```
+
+The two bundled Iris CSV files currently contain the same 150 observations. The application loads the canonical Iris dataset through scikit-learn's `load_iris`; the CSV files are included as project data references.
 
 ## ⚙️ Installation and Setup
 
