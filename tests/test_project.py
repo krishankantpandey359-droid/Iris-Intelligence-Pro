@@ -47,8 +47,7 @@ def test_data_quality_rejects_unknown_species_label():
 
 def test_data_quality_rejects_duplicate_column_names():
     df = load_data()
-    df.columns = FEATURES + [TARGET]
-    df.insert(0, FEATURES[0], df[FEATURES[0]])
+    df.columns = [FEATURES[0], FEATURES[0], FEATURES[2], FEATURES[3], TARGET]
     with pytest.raises(ValueError, match="duplicate column names"):
         validate_data(df)
 
