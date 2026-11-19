@@ -1,0 +1,39 @@
+name: Iris project checks
+
+on:
+  push:
+    branches: ["main", "audit-fix/iris-readme-image-path"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -q
+      - name: Train and verify model artifacts
+        run: python src/train.py
+      - name: Start Streamlit and check HTTP response
+        run: |
+          streamlit run app.py --server.headless true --server.port 8501 > streamlit.log 2>&1 &
+          APP_PID=$!
+          trap 'kill $APP_PID 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://localhost:8501/ > /dev/null; then
+              echo "Streamlit app responded successfully."
+              exit 0
+            fi
+            sleep 2
+          done
+          cat streamlit.log
+          exit 1
