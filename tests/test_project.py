@@ -55,3 +55,27 @@ def test_data_quality_rejects_duplicate_column_names():
 def test_data_quality_rejects_non_dataframe_input():
     with pytest.raises(TypeError, match="pandas DataFrame"):
         validate_data(None)
+
+def test_data_quality_rejects_missing_target():
+    df = load_data()
+    df.loc[0, TARGET] = None
+    result = validate_data(df)
+    assert result["missing_values"] == 1
+    assert result["invalid_classes"] == 1
+    assert not result["valid"]
+
+
+def test_data_quality_rejects_single_class_target():
+    df = load_data()
+    df[TARGET] = df[TARGET].iloc[0]
+    result = validate_data(df)
+    assert result["missing_classes"] == ["versicolor", "virginica"]
+    assert not result["valid"]
+
+def test_data_quality_rejects_non_numeric_features():
+    df = load_data()
+    df[FEATURES[0]] = df[FEATURES[0]].astype(object)
+    df.loc[0, FEATURES[0]] = "not-a-number"
+    result = validate_data(df)
+    assert not result["valid"]
+    assert result["numeric_features"] is False
