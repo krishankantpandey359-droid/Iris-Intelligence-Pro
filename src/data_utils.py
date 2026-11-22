@@ -43,6 +43,8 @@ def validate_data(frame):
 
     labels = frame[TARGET].astype("string").str.strip().str.lower()
     invalid_classes = int((labels.isna() | ~labels.isin(VALID_CLASSES)).sum())
+    observed_classes = set(labels.dropna().unique()) & VALID_CLASSES
+    missing_classes = sorted(VALID_CLASSES - observed_classes)
     missing_values = int(selected.isna().sum().sum())
     valid = bool(
         len(frame) > 0
@@ -51,6 +53,7 @@ def validate_data(frame):
         and non_finite_values == 0
         and non_positive_values == 0
         and invalid_classes == 0
+        and not missing_classes
     )
 
     return {
@@ -62,5 +65,6 @@ def validate_data(frame):
         "non_finite_values": non_finite_values,
         "non_positive_values": non_positive_values,
         "invalid_classes": invalid_classes,
+        "missing_classes": missing_classes,
         "valid": valid,
     }
