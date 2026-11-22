@@ -69,6 +69,7 @@ def test_data_quality_rejects_single_class_target():
     df = load_data()
     df[TARGET] = df[TARGET].iloc[0]
     result = validate_data(df)
+    assert result["missing_classes"] == ["versicolor", "virginica"]
     assert not result["valid"]
 
 def test_data_quality_rejects_non_numeric_features():
