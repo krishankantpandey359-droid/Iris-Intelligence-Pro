@@ -2,7 +2,7 @@ name: Iris project checks
 
 on:
   push:
-    branches: ["main", "audit-fix/iris-readme-image-path"]
+    branches: ["main", "audit-fix/iris-readme-image-path", "quality/**"]
   pull_request:
     branches: ["main"]
 
